@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Área do Aluno | Stefany Fit</title>
+  <title>Área Online | Stefany Fit</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -11,34 +11,50 @@
 
 <header class="topo">
   <h1>Área Online & Presencial</h1>
-  <p>Somente alunos matriculados</p>
+  <p>Acesso exclusivo</p>
 </header>
 
 <div class="ia-box">
-  <h2>Login do Aluno</h2>
+  <h2>Login</h2>
 
-  <input type="text" id="aluno" placeholder="Nome do aluno">
+  <input type="text" id="usuario" placeholder="Usuário">
   <input type="password" id="senha" placeholder="Senha">
 
-  <a class="btn" onclick="loginAluno()">Entrar</a>
+  <a class="btn" onclick="login()">Entrar</a>
 
-  <p style="margin-top:15px;font-size:13px;color:#ccc">
-    Acesso exclusivo para alunos Stefany Fit
-  </p>
+  <p id="erro" style="color:#ff4da6;margin-top:15px;"></p>
+
+  <hr style="margin:25px 0;opacity:.2">
+
+  <a onclick="loginAdmin()" style="cursor:pointer;color:#ff4da6;font-weight:bold;">
+    🔐 Sou Admin
+  </a>
 </div>
 
 <a href="index.html" class="btn-voltar">⬅ Voltar</a>
 
 <script>
-function loginAluno(){
-  const aluno = document.getElementById("aluno").value;
+function login(){
+  const usuario = document.getElementById("usuario").value;
   const senha = document.getElementById("senha").value;
 
-  if(aluno === "teste" && senha === "123"){
-    localStorage.setItem("aluno", aluno);
+  if(usuario === "teste" && senha === "123"){
+    localStorage.setItem("aluno", usuario);
     window.location.href = "portal.html";
   } else {
-    alert("Aluno ou senha inválidos");
+    document.getElementById("erro").innerText = "Usuário ou senha inválidos";
+  }
+}
+
+function loginAdmin(){
+  const usuario = document.getElementById("usuario").value;
+  const senha = document.getElementById("senha").value;
+
+  if(usuario === "admin" && senha === "stefanyfit"){
+    localStorage.setItem("admin", "true");
+    window.location.href = "admin.html";
+  } else {
+    document.getElementById("erro").innerText = "Acesso admin negado";
   }
 }
 </script>
