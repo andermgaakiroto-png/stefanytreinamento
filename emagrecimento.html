@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>IA de Emagrecimento | Stefany Fit Pro</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #000;
+            color: #fff;
+        }
+
+        header {
+            padding: 50px 20px;
+            text-align: center;
+            background: linear-gradient(135deg, #ff2f92, #ff5ab3);
+        }
+
+        section {
+            padding: 30px;
+            max-width: 500px;
+            margin: auto;
+        }
+
+        input,
+        select,
+        button {
+            width: 100%;
+            padding: 14px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: none;
+            font-size: 16px;
+        }
+
+        button {
+            background: #ff2f92;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .resultado {
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 20px;
+            border-radius: 15px;
+        }
+
+        .voltar {
+            display: block;
+            text-align: center;
+            margin: 30px;
+            color: #ff5ab3;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>IA de Emagrecimento</h1>
+        <p>Alimentação inteligente para resultados reais</p>
+    </header>
+
+    <section>
+        <select id="objetivo">
+            <option value="">Selecione seu objetivo</option>
+            <option value="leve">Perder peso leve</option>
+            <option value="medio">Emagrecimento médio</option>
+            <option value="intenso">Emagrecimento intenso</option>
+        </select>
+
+        <input type="number" id="peso" placeholder="Seu peso (kg)">
+        <input type="number" id="altura" placeholder="Sua altura (cm)">
+
+        <button onclick="analisar()">Analisar</button>
+
+
+        <script>
+            function abrirIA() {
+                window.location.href = "https://stefiny-fit-1.onrender.com/ia";
+            }
+        </script>
+        <h2> IA de Emagrecimento</h2>
+
+        <input id="msg" placeholder="Ex: O que comer para emagrecer?" />
+        <button onclick="enviar()">Enviar</button>
+
+        <div id="resposta"></div>
+
+        <script>
+            async function enviar() {
+                const texto = document.getElementById("msg").value;
+
+                const res = await fetch("http://localhost:3000/ia", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ pergunta: texto })
+                });
+
+                const data = await res.json();
+                document.getElementById("resposta").innerText = data.resposta;
+            }
+        </script>
+
+
+        <div class="resultado" id="resultado"></div>
+    </section>
+
+    <a class="voltar" href="index.html">⬅ Voltar</a>
+
+    <script>
+        function analisar() {
+            const peso = Number(document.getElementById("peso").value);
+            const altura = Number(document.getElementById("altura").value) / 100;
+            const objetivo = document.getElementById("objetivo").value;
+            const resultado = document.getElementById("resultado");
+
+            if (!peso || !altura || !objetivo) {
+                resultado.innerHTML = "⚠️ Preencha todos os campos.";
+                return;
+            }
+
+            const imc = (peso / (altura * altura)).toFixed(1);
+            let dica = "";
+
+            if (objetivo === "leve") {
+                dica = "Priorize refeições equilibradas, reduza açúcar e caminhe diariamente.";
+            }
+            if (objetivo === "medio") {
+                dica = "Reduza carboidratos simples, aumente proteína e mantenha treino regular.";
+            }
+            if (objetivo === "intenso") {
+                dica = "Controle rigoroso de calorias, proteína alta, acompanhamento profissional indicado.";
+            }
+
+            resultado.innerHTML = `
+        <h3>Resultado da IA</h3>
+        <p><strong>IMC:</strong> ${imc}</p>
+        <p>${dica}</p>
+        <p>🥗 Dica base: legumes, proteínas magras, água e constância.</p>
+    `;
+        }
+    </script>
+
+</body>
+
+</html>
