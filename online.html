@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Área do Aluno | Stefany Fit</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="page">
+
+<header class="topo">
+  <h1>Área Online & Presencial</h1>
+  <p>Somente alunos matriculados</p>
+</header>
+
+<div class="ia-box">
+  <h2>Login do Aluno</h2>
+
+  <input type="text" id="aluno" placeholder="Nome do aluno">
+  <input type="password" id="senha" placeholder="Senha">
+
+  <a class="btn" onclick="loginAluno()">Entrar</a>
+
+  <p style="margin-top:15px;font-size:13px;color:#ccc">
+    Acesso exclusivo para alunos Stefany Fit
+  </p>
+</div>
+
+<a href="index.html" class="btn-voltar">⬅ Voltar</a>
+
+<script>
+function loginAluno(){
+  const aluno = document.getElementById("aluno").value;
+  const senha = document.getElementById("senha").value;
+
+  if(aluno === "teste" && senha === "123"){
+    localStorage.setItem("aluno", aluno);
+    window.location.href = "portal.html";
+  } else {
+    alert("Aluno ou senha inválidos");
+  }
+}
+</script>
+
+</body>
+</html>

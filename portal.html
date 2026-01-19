@@ -1,0 +1,29 @@
+<section class="conteudo">
+
+  <div class="box">
+    <h2>🏋️ Treino Atual</h2>
+    <p id="treinoAluno"></p>
+  </div>
+
+  <div class="box">
+    <h2>📅 Agenda</h2>
+    <p id="agendaAluno"></p>
+  </div>
+
+  <div class="box">
+    <h2>📢 Avisos</h2>
+    <p id="avisosAluno"></p>
+  </div>
+
+</section>
+
+<script>
+document.getElementById("treinoAluno").innerText =
+  localStorage.getItem("treino") || "Treino não definido.";
+
+document.getElementById("agendaAluno").innerText =
+  localStorage.getItem("agenda") || "Agenda não definida.";
+
+document.getElementById("avisosAluno").innerText =
+  localStorage.getItem("avisos") || "Sem avisos.";
+</script>

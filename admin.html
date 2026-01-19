@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Painel Admin | Stefany Fit</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="page">
+
+<header class="topo">
+  <h1>Painel Administrativo</h1>
+  <p>Controle de Treinos & Agenda</p>
+</header>
+
+<section class="conteudo">
+
+  <div class="box">
+    <h2>🏋️ Treino do Aluno</h2>
+    <textarea id="treino" rows="6" style="width:100%;border-radius:10px;padding:10px;"></textarea>
+  </div>
+
+  <div class="box">
+    <h2>📅 Agenda</h2>
+    <textarea id="agenda" rows="5" style="width:100%;border-radius:10px;padding:10px;"></textarea>
+  </div>
+
+  <div class="box">
+    <h2>📢 Avisos</h2>
+    <textarea id="avisos" rows="4" style="width:100%;border-radius:10px;padding:10px;"></textarea>
+  </div>
+
+  <a class="btn" onclick="salvarDados()">💾 Salvar Tudo</a>
+  <a class="btn-voltar" href="index.html">⬅ Voltar</a>
+
+</section>
+
+<script>
+function salvarDados(){
+  localStorage.setItem("treino", document.getElementById("treino").value);
+  localStorage.setItem("agenda", document.getElementById("agenda").value);
+  localStorage.setItem("avisos", document.getElementById("avisos").value);
+
+  alert("Dados salvos com sucesso!");
+}
+
+window.onload = () => {
+  document.getElementById("treino").value = localStorage.getItem("treino") || "";
+  document.getElementById("agenda").value = localStorage.getItem("agenda") || "";
+  document.getElementById("avisos").value = localStorage.getItem("avisos") || "";
+};
+</script>
+
+</body>
+</html>
