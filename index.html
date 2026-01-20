@@ -1,85 +1,291 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stefany Fit Pro</title>
 
-    <title>Stefany Fit | Personal Trainer</title>
+<!-- GOOGLE FONT PREMIUM -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-    <meta name="description"
-        content="Stefany Fit - Personal Trainer especializada em treino feminino, emagrecimento saudável e acompanhamento personalizado.">
-    <meta name="theme-color" content="#ff4da6">
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#d4af37">
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins', sans-serif;
+}
 
+body{
+  background:#0a0a0a;
+  color:#fff;
+}
 
-    <link rel="stylesheet" href="styles.css">
+/* ===== HERO ===== */
+.hero{
+  min-height:100vh;
+  background:
+    linear-gradient(180deg, rgba(0,0,0,.85), rgba(0,0,0,.6)),
+    url("mulher.png");
+  background-size:cover;
+  background-position:center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.hero-content{
+  max-width:600px;
+  text-align:center;
+}
+
+.badge{
+  display:inline-block;
+  background:rgba(255,77,166,.15);
+  color:#ff4da6;
+  padding:8px 20px;
+  border-radius:30px;
+  font-size:14px;
+  margin-bottom:20px;
+}
+
+.hero-content h1{
+  font-size:3.2rem;
+  font-weight:700;
+  line-height:1.2;
+  margin-bottom:20px;
+}
+
+.hero-content h1 span{
+  color:#ff4da6;
+}
+
+.hero-content p{
+  font-size:1.1rem;
+  opacity:.9;
+  margin-bottom:35px;
+}
+
+.hero-buttons{
+  display:flex;
+  gap:15px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+
+.btn{
+  padding:15px 38px;
+  border-radius:40px;
+  font-weight:600;
+  text-decoration:none;
+  transition:.3s;
+}
+
+.btn-primary{
+  background:#ff4da6;
+  color:#000;
+}
+
+.btn-primary:hover{
+  background:#ff1f8f;
+  transform:translateY(-2px);
+}
+
+.btn-outline{
+  border:2px solid #ff4da6;
+  color:#ff4da6;
+}
+
+.btn-outline:hover{
+  background:#ff4da6;
+  color:#000;
+}
+
+/* ===== SEÇÕES ===== */
+section{
+  padding:80px 20px;
+  max-width:1200px;
+  margin:auto;
+}
+
+.section-title{
+  text-align:center;
+  margin-bottom:60px;
+}
+
+.section-title h2{
+  font-size:2.4rem;
+  font-weight:700;
+}
+
+.section-title span{
+  color:#ff4da6;
+}
+
+/* ===== CARDS ===== */
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:30px;
+}
+
+.card{
+  height:300px;
+  border-radius:25px;
+  background-size:cover;
+  background-position:center;
+  position:relative;
+  overflow:hidden;
+  text-decoration:none;
+  box-shadow:0 20px 40px rgba(0,0,0,.6);
+  transition:.4s;
+}
+
+.card:hover{
+  transform:translateY(-8px) scale(1.02);
+}
+
+.card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg, rgba(0,0,0,.2), rgba(0,0,0,.85));
+}
+
+.card-content{
+  position:absolute;
+  bottom:25px;
+  left:25px;
+  z-index:2;
+}
+
+.card-content h3{
+  color:#ff4da6;
+  font-size:1.4rem;
+  margin-bottom:5px;
+}
+
+.card-content p{
+  font-size:.95rem;
+  opacity:.9;
+}
+
+/* ===== BENEFÍCIOS ===== */
+.benefits{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:30px;
+}
+
+.benefit{
+  background:#121212;
+  padding:30px;
+  border-radius:20px;
+  text-align:center;
+}
+
+.benefit h4{
+  color:#ff4da6;
+  margin-bottom:10px;
+}
+
+/* ===== FOOTER ===== */
+footer{
+  padding:40px 20px;
+  text-align:center;
+  color:#aaa;
+  font-size:.9rem;
+  background:#000;
+}
+
+/* ===== RESPONSIVO ===== */
+@media(max-width:600px){
+  .hero-content h1{
+    font-size:2.4rem;
+  }
+}
+</style>
 </head>
 
 <body>
 
-    <!-- HERO -->
-    <header class="hero">
-        <div class="hero-box">
-            <h1>Stefany Fit</h1>
-            <p>Treinos femininos focados em resultado real</p>
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-content">
+    <div class="badge">Treino feminino premium</div>
 
-            <a class="btn" href="https://wa.me/5544984533328" target="_blank" rel="noopener noreferrer">
-                Quero começar agora
-            </a>
-        </div>
-    </header>
+    <h1>Transforme seu corpo <br><span>com método inteligente</span></h1>
 
-    <!-- SERVIÇOS -->
-    <section>
-        <div class="titulo">
-            <h2>Serviços</h2>
-        </div>
+    <p>
+      Treinos personalizados, acompanhamento real  
+      e resultados visíveis no seu ritmo.
+    </p>
 
-        <div class="cards">
+    <div class="hero-buttons">
+      <a href="emagrecimento.html" class="btn btn-primary">Começar agora</a>
+      <a href="login.html" class="btn btn-outline">Área da aluna</a>
+    </div>
+  </div>
+</header>
 
-            <a href="treino.html" class="card card-treino">
-                <div class="overlay">
-                    <h3>Treino Personalizado</h3>
-                    <p>Feito pra você.</p>
-                </div>
-            </a>
+<!-- OBJETIVOS -->
+<section>
+  <div class="section-title">
+    <h2>Escolha seu <span>objetivo</span></h2>
+  </div>
 
-            <a href="emagrecimento.html" class="card card-emagrecimento">
-                <div class="overlay">
-                    <h3>Emagrecimento</h3>
-                    <p>Com saúde.</p>
-                </div>
-            </a>
-
-            <a href="hipertrofia.html" class="card card-hipertrofia">
-                <div class="overlay">
-                    <h3>Hipertrofia</h3>
-                    <p>Definição real.</p>
-                </div>
-            </a>
-
-            <a href="online.html" class="card card-online">
-                <div class="overlay">
-                    <h3>Online & Presencial</h3>
-                    <p>Acompanhamento total.</p>
-                </div>
-            </a>
-
-        </div>
-    </section>
-
-    <!-- WHATSAPP FLOAT -->
-    <a class="whatsapp-float" href="https://wa.me/5544984533328" target="_blank" rel="noopener noreferrer">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
-        <span>WhatsApp</span>
+  <div class="cards">
+    <a href="emagrecimento.html" class="card" style="background-image:url('mulher.png')">
+      <div class="card-content">
+        <h3>Emagrecimento</h3>
+        <p>Secar com saúde</p>
+      </div>
     </a>
 
-    <footer>
-        © 2026 – Stefany Fit
-    </footer>
+    <a href="hipertrofia.html" class="card" style="background-image:url('mulher.png')">
+      <div class="card-content">
+        <h3>Hipertrofia</h3>
+        <p>Definição e força</p>
+      </div>
+    </a>
+
+    <a href="login.html" class="card" style="background-image:url('mulher.png')">
+      <div class="card-content">
+        <h3>Portal da Aluna</h3>
+        <p>Treinos & agenda</p>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- BENEFÍCIOS -->
+<section>
+  <div class="section-title">
+    <h2>Por que <span>funciona</span></h2>
+  </div>
+
+  <div class="benefits">
+    <div class="benefit">
+      <h4>Treino inteligente</h4>
+      <p>Nada genérico. Tudo pensado pra você.</p>
+    </div>
+
+    <div class="benefit">
+      <h4>Acompanhamento real</h4>
+      <p>Você sabe exatamente o que fazer.</p>
+    </div>
+
+    <div class="benefit">
+      <h4>Online & Presencial</h4>
+      <p>Treine onde estiver.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 — Stefany Fit Pro • Todos os direitos reservados
+</footer>
 
 </body>
-
 </html>

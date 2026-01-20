@@ -1,71 +1,57 @@
-<script>
-    if (localStorage.getItem("admin") !== "true") {
-        window.location.href = "online.html";
-    }
-</script>
-
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-    <meta charset="UTF-8">
-    <title>Painel Admin | Stefany Fit</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<title>Painel Admin</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="page">
+<body onload="proteger('admin'); carregarDashboard()">
 
-    <header class="topo">
-        <h1>Painel Administrativo</h1>
-        <p>Controle de Treinos & Agenda</p>
-    </header>
+<header class="topo">
+  <h1>Painel da Professora</h1>
+</header>
 
-    <section class="conteudo">
+<section class="grid">
 
-        <div class="box">
-            <h2>🏋️ Treino do Aluno</h2>
-            <textarea id="treino" rows="6" style="width:100%;border-radius:10px;padding:10px;"></textarea>
-        </div>
+<div class="card">
+  <h3>📊 Dashboard</h3>
+  <p>Total de alunos: <span id="totalAlunos">0</span></p>
+  <p>Alunos ativos: <span id="ativos">0</span></p>
+  <p>Bloqueados: <span id="bloqueados">0</span></p>
+</div>
 
-        <div class="box">
-            <h2>📅 Agenda</h2>
-            <textarea id="agenda" rows="5" style="width:100%;border-radius:10px;padding:10px;"></textarea>
-        </div>
+<div class="card">
+  <h3>👥 Criar Aluno</h3>
+  <input id="nomeAluno" placeholder="Nome">
+  <input id="emailAluno" placeholder="Email">
+  <input id="senhaAluno" placeholder="Senha">
+  <select id="planoAluno">
+    <option value="Online">Online</option>
+    <option value="Presencial">Presencial</option>
+    <option value="VIP">VIP</option>
+  </select>
+  <button onclick="criarAluno()">Salvar Aluno</button>
+</div>
 
-        <div class="box">
-            <h2>📢 Avisos</h2>
-            <textarea id="avisos" rows="4" style="width:100%;border-radius:10px;padding:10px;"></textarea>
-        </div>
+<div class="card">
+  <h3>🏋️ Treino do Aluno</h3>
+  <input id="emailTreino" placeholder="Email do aluno">
+  <textarea id="treinoTexto" placeholder="Ex: Agachamento 4x12 | Desc 60s"></textarea>
+  <button onclick="salvarTreino()">Salvar Treino</button>
+</div>
 
-        <a class="btn" onclick="salvarDados()">💾 Salvar Tudo</a>
-        <a class="btn-voltar" href="index.html">⬅ Voltar</a>
+<div class="card">
+  <h3>📅 Agenda</h3>
+  <textarea id="agendaTexto" placeholder="Seg 19h - Presencial"></textarea>
+  <button onclick="salvarAgenda()">Salvar Agenda</button>
+</div>
 
-    </section>
+</section>
 
-    <script>
-        function salvarDados() {
-            localStorage.setItem("treino", document.getElementById("treino").value);
-            localStorage.setItem("agenda", document.getElementById("agenda").value);
-            localStorage.setItem("avisos", document.getElementById("avisos").value);
+<button class="logout" onclick="logout()">Sair</button>
 
-            alert("Dados salvos com sucesso!");
-        }
-
-        window.onload = () => {
-            document.getElementById("treino").value = localStorage.getItem("treino") || "";
-            document.getElementById("agenda").value = localStorage.getItem("agenda") || "";
-            document.getElementById("avisos").value = localStorage.getItem("avisos") || "";
-        };
-    </script>
-
+<script src="script.js"></script>
 </body>
-
-</html><a class="btn-voltar" onclick="logoutAdmin()">Sair</a>
-
-<script>
-function logoutAdmin(){
-  localStorage.removeItem("admin");
-  window.location.href = "online.html";
-}
-</script>
+</html>

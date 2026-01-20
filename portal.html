@@ -1,29 +1,224 @@
-<section class="conteudo">
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Portal Fit Premium</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <div class="box">
-    <h2>🏋️ Treino Atual</h2>
-    <p id="treinoAluno"></p>
-  </div>
+<style>
+body{
+    margin:0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg,#111,#222);
+    color:#fff;
+}
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+.card{
+    background:#1c1c1c;
+    border-radius:15px;
+    padding:20px;
+    margin-bottom:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,.5);
+}
+input,select,button{
+    width:100%;
+    padding:12px;
+    border-radius:10px;
+    border:none;
+    margin-top:10px;
+    font-size:15px;
+}
+button{
+    background:#00e676;
+    font-weight:bold;
+    cursor:pointer;
+}
+button:hover{
+    background:#00c853;
+}
+.hidden{display:none}
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:15px;
+}
+.badge{
+    padding:5px 10px;
+    border-radius:20px;
+    font-size:12px;
+}
+.ativo{background:#00e676;color:#000}
+.bloqueado{background:#ff5252}
+.logout{
+    background:#ff5252;
+    margin-top:20px;
+}
+</style>
+</head>
 
-  <div class="box">
-    <h2>📅 Agenda</h2>
-    <p id="agendaAluno"></p>
-  </div>
+<body>
 
-  <div class="box">
-    <h2>📢 Avisos</h2>
-    <p id="avisosAluno"></p>
-  </div>
+<div class="container">
 
-</section>
+<!-- LOGIN -->
+<div id="login" class="card">
+    <h2>🔐 Login</h2>
+    <input id="email" placeholder="Email">
+    <input id="senha" type="password" placeholder="Senha">
+    <button onclick="login()">Entrar</button>
+</div>
+
+<!-- ADMIN -->
+<div id="admin" class="hidden">
+
+    <div class="card">
+        <h2>👩‍🏫 Painel da Professora</h2>
+        <button class="logout" onclick="logout()">Sair</button>
+    </div>
+
+    <div class="grid">
+        <div class="card">
+            <h3>➕ Criar Aluno</h3>
+            <input id="aNome" placeholder="Nome">
+            <input id="aEmail" placeholder="Email">
+            <input id="aSenha" placeholder="Senha">
+            <select id="aPlano">
+                <option>Online</option>
+                <option>Presencial</option>
+                <option>VIP</option>
+            </select>
+            <button onclick="criarAluno()">Salvar Aluno</button>
+        </div>
+
+        <div class="card">
+            <h3>👥 Alunos Cadastrados</h3>
+            <div id="listaAlunos"></div>
+        </div>
+    </div>
+</div>
+
+<!-- ALUNO -->
+<div id="aluno" class="hidden">
+    <div class="card">
+        <h2>🏋️ Portal do Aluno</h2>
+        <p><b>Nome:</b> <span id="alunoNome"></span></p>
+        <p><b>Plano:</b> <span id="alunoPlano"></span></p>
+        <span id="alunoStatus" class="badge"></span>
+        <button class="logout" onclick="logout()">Sair</button>
+    </div>
+
+    <div class="card">
+        <h3>📅 Treino do Dia</h3>
+        <ul>
+            <li>Agachamento – 4x12</li>
+            <li>Flexão – 3x15</li>
+            <li>Abdominal – 3x20</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h3>💬 Contato</h3>
+        <a href="https://wa.me/55SEUNUMERO" target="_blank">
+            <button>Falar com a Professora</button>
+        </a>
+    </div>
+</div>
+
+</div>
 
 <script>
-document.getElementById("treinoAluno").innerText =
-  localStorage.getItem("treino") || "Treino não definido.";
+const adminLogin = {email:"admin@fit.com",senha:"123"}
 
-document.getElementById("agendaAluno").innerText =
-  localStorage.getItem("agenda") || "Agenda não definida.";
+function getAlunos(){
+    return JSON.parse(localStorage.getItem("alunos")||"[]")
+}
 
-document.getElementById("avisosAluno").innerText =
-  localStorage.getItem("avisos") || "Sem avisos.";
+function salvarAlunos(alunos){
+    localStorage.setItem("alunos",JSON.stringify(alunos))
+}
+
+function login(){
+    const email = document.getElementById("email").value
+    const senha = document.getElementById("senha").value
+
+    // ADMIN
+    if(email===adminLogin.email && senha===adminLogin.senha){
+        document.getElementById("login").classList.add("hidden")
+        document.getElementById("admin").classList.remove("hidden")
+        listarAlunos()
+        return
+    }
+
+    // ALUNO
+    const alunos = getAlunos()
+    const aluno = alunos.find(a=>a.email===email && a.senha===senha)
+
+    if(!aluno){
+        alert("Login inválido")
+        return
+    }
+    if(aluno.status==="bloqueado"){
+        alert("Aluno bloqueado")
+        return
+    }
+
+    document.getElementById("login").classList.add("hidden")
+    document.getElementById("aluno").classList.remove("hidden")
+
+    document.getElementById("alunoNome").innerText = aluno.nome
+    document.getElementById("alunoPlano").innerText = aluno.plano
+
+    const st = document.getElementById("alunoStatus")
+    st.innerText = aluno.status
+    st.className = "badge ativo"
+}
+
+function criarAluno(){
+    const alunos = getAlunos()
+
+    alunos.push({
+        nome:aNome.value,
+        email:aEmail.value,
+        senha:aSenha.value,
+        plano:aPlano.value,
+        status:"ativo"
+    })
+
+    salvarAlunos(alunos)
+    listarAlunos()
+    alert("Aluno criado com sucesso!")
+}
+
+function listarAlunos(){
+    const alunos = getAlunos()
+    listaAlunos.innerHTML = ""
+
+    alunos.forEach((a,i)=>{
+        listaAlunos.innerHTML += `
+        <div style="margin-bottom:10px">
+            <b>${a.nome}</b><br>
+            ${a.email}<br>
+            <span class="badge ${a.status}">${a.status}</span>
+            <button onclick="bloquear(${i})">Bloquear</button>
+        </div>`
+    })
+}
+
+function bloquear(i){
+    const alunos = getAlunos()
+    alunos[i].status="bloqueado"
+    salvarAlunos(alunos)
+    listarAlunos()
+}
+
+function logout(){
+    location.reload()
+}
 </script>
+
+</body>
+</html>
