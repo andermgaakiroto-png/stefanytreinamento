@@ -1,5 +1,9 @@
 {
   "appId": "com.stefany.fit",
   "appName": "Stefany Fit Pro",
-  "webDir": "www"
+  "webDir": "www",
+  "server": {
+    "url": "https://andermgaakiroto-png.github.io/stefanytreinamento/",
+    "cleartext": true
+  }
 }

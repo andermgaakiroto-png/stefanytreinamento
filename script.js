@@ -1,19 +1,28 @@
-// USUÁRIOS INICIAIS
-let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [
-  {
-    nome: "Admin",
-    email: "admin@fit.com",
-    senha: "1235",
-    tipo: "admin",
-    status: "ativo"
-  }
-];
+/*********************************
+ * DADOS INICIAIS
+ *********************************/
+let usuarios = JSON.parse(localStorage.getItem("usuarios"));
+
+if (!usuarios) {
+  usuarios = [
+    {
+      nome: "Admin",
+      email: "admin@fit.com",
+      senha: "1235",
+      tipo: "admin",
+      status: "ativo"
+    }
+  ];
+  salvarUsuarios();
+}
 
 function salvarUsuarios() {
   localStorage.setItem("usuarios", JSON.stringify(usuarios));
 }
 
-// LOGIN
+/*********************************
+ * LOGIN
+ *********************************/
 function login() {
   const email = document.getElementById("loginEmail").value;
   const senha = document.getElementById("loginSenha").value;
@@ -30,28 +39,31 @@ function login() {
 
   localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
 
-  if (usuario.tipo === "admin") {
-    location.href = "admin.html";
-  } else {
-    location.href = "aluno.html";
-  }
+  location.href = usuario.tipo === "admin" ? "admin.html" : "aluno.html";
 }
 
-// PROTEÇÃO
+/*********************************
+ * PROTEÇÃO DE ROTAS
+ *********************************/
 function proteger(tipo) {
   const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
+
   if (!usuario || usuario.tipo !== tipo) {
     location.href = "login.html";
   }
 }
 
-// LOGOUT
+/*********************************
+ * LOGOUT
+ *********************************/
 function logout() {
   localStorage.removeItem("usuarioLogado");
   location.href = "login.html";
 }
 
-// ===== ADMIN =====
+/*********************************
+ * ADMIN – CRIAR ALUNO
+ *********************************/
 function criarAluno() {
   const nome = document.getElementById("nomeAluno").value;
   const email = document.getElementById("emailAluno").value;
@@ -60,6 +72,12 @@ function criarAluno() {
 
   if (!nome || !email || !senha) {
     alert("Preencha todos os campos");
+    return;
+  }
+
+  const existe = usuarios.find(u => u.email === email);
+  if (existe) {
+    alert("Aluno já cadastrado");
     return;
   }
 
@@ -73,9 +91,50 @@ function criarAluno() {
   });
 
   salvarUsuarios();
+  carregarDashboard();
   alert("Aluno criado com sucesso!");
 }
 
+/*********************************
+ * ADMIN – DASHBOARD
+ *********************************/
+function carregarDashboard() {
+  const alunos = usuarios.filter(u => u.tipo === "aluno");
+
+  document.getElementById("totalAlunos").innerText = alunos.length;
+  document.getElementById("ativos").innerText =
+    alunos.filter(a => a.status === "ativo").length;
+
+  document.getElementById("bloqueados").innerText =
+    alunos.filter(a => a.status === "bloqueado").length;
+
+  carregarListaAlunos(alunos);
+}
+
+/*********************************
+ * ADMIN – LISTA DE ALUNOS
+ *********************************/
+function carregarListaAlunos(alunos) {
+  const tabela = document.getElementById("listaAlunos");
+  if (!tabela) return;
+
+  tabela.innerHTML = "";
+
+  alunos.forEach(aluno => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${aluno.nome}</td>
+      <td>${aluno.email}</td>
+      <td>${aluno.plano}</td>
+      <td>${aluno.status}</td>
+    `;
+    tabela.appendChild(tr);
+  });
+}
+
+/*********************************
+ * ADMIN – TREINO E AGENDA
+ *********************************/
 function salvarTreino() {
   const email = document.getElementById("emailTreino").value;
   const treino = document.getElementById("treinoTexto").value;
@@ -90,17 +149,13 @@ function salvarAgenda() {
   alert("Agenda salva!");
 }
 
-function carregarDashboard() {
-  document.getElementById("totalUsuarios").innerText = usuarios.length;
-  document.getElementById("ativos").innerText =
-    usuarios.filter(u => u.status === "ativo" && u.tipo === "aluno").length;
-  document.getElementById("bloqueados").innerText =
-    usuarios.filter(u => u.status === "bloqueado").length;
-}
-
-// ===== ALUNO =====
+/*********************************
+ * ALUNO – PORTAL
+ *********************************/
 function carregarAluno() {
   const aluno = JSON.parse(localStorage.getItem("usuarioLogado"));
+
+  if (!aluno) return;
 
   document.getElementById("alunoNome").innerText = aluno.nome;
   document.getElementById("alunoPlano").innerText = "Plano: " + aluno.plano;
@@ -110,71 +165,4 @@ function carregarAluno() {
 
   document.getElementById("agendaAluno").innerText =
     localStorage.getItem("agenda_geral") || "Agenda não disponível";
-}
-function criarAluno() {
-  const nome = document.getElementById("nome").value;
-  const email = document.getElementById("email").value;
-  const senha = document.getElementById("senha").value;
-
-  if (!nome || !email || !senha) {
-    alert("Preencha todos os campos");
-    return;
-  }
-
-  const alunos = JSON.parse(localStorage.getItem("alunos")) || [];
-
-  alunos.push({
-    nome,
-    email,
-    senha,
-    status: "ativo",
-    plano: "online"
-  });
-
-  localStorage.setItem("alunos", JSON.stringify(alunos));
-  alert("Aluno criado com sucesso!");
-}
-function carregarDashboard(){
-  const alunos = usuarios.filter(u => u.tipo === "aluno");
-
-  document.getElementById("totalAlunos").innerText = alunos.length;
-  document.getElementById("ativos").innerText =
-    alunos.filter(a => a.status === "ativo").length;
-
-  document.getElementById("bloqueados").innerText =
-    alunos.filter(a => a.status === "bloqueado").length;
-}
-function carregarDashboard(){
-  const alunos = usuarios.filter(u => u.tipo === "aluno");
-
-  document.getElementById("totalAlunos").innerText = alunos.length;
-  document.getElementById("ativos").innerText =
-    alunos.filter(a => a.status === "ativo").length;
-
-  document.getElementById("bloqueados").innerText =
-    alunos.filter(a => a.status === "bloqueado").length;
-}
-function criarAluno(){
-  const nome = document.getElementById("nomeAluno").value;
-  const email = document.getElementById("emailAluno").value;
-  const senha = document.getElementById("senhaAluno").value;
-  const plano = document.getElementById("planoAluno").value;
-
-  if(!nome || !email || !senha){
-    alert("Preencha todos os campos");
-    return;
-  }
-
-  usuarios.push({
-    nome,
-    email,
-    senha,
-    plano,
-    tipo: "aluno",
-    status: "ativo"
-  });
-
-  salvar();
-  carregarDashboard();
-  alert("Aluno criado com sucesso!");
 }
